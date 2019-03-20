@@ -128,7 +128,7 @@ return [
             'forgot_pass' => 'Forgot Password?',
             'button_title' => 'Sign In',
             'remember' => 'Remember Me',
-            'footer' => '© Copyright 2018 Webkul Software, All rights reserved',
+            'footer' => '© Copyright :year Webkul Software, All rights reserved',
             'invalid-creds' => 'Please Check Your Credentials And Try Again',
             'verify-first' => 'Verify Your Email Account First',
             'resend-verification' => 'Resend Verification Mail Again'
@@ -201,8 +201,7 @@ return [
                 'create' => [
                     'page-title' => 'Customer - Add Address Form',
                     'title' => 'Add Address',
-                    'address1' => 'Address Line 1',
-                    'address2' => 'Address Line 2',
+                    'street-address' => 'Street Address',
                     'country' => 'Country',
                     'state' => 'State',
                     'select-state' => 'Select a region, state or province',
@@ -311,6 +310,8 @@ return [
         'total-rating' => ':total_rating Ratings & :total_reviews Reviews',
         'by' => 'By :name',
         'up-sell-title' => 'We found other products you might like!',
+        'related-product-title' => 'Related Products',
+        'cross-sell-title' => 'More choices',
         'reviews-title' => 'Ratings & Reviews',
         'write-review-btn' => 'Write Review',
         'choose-option' => 'Choose an option',
@@ -402,8 +403,7 @@ return [
             'first-name' => 'First Name',
             'last-name' => 'Last Name',
             'email' => 'Email',
-            'address1' => 'Address',
-            'address2' => 'Address 2',
+            'address1' => 'Street Address',
             'city' => 'City',
             'state' => 'State',
             'select-state' => 'Select a region, state or province',
@@ -414,10 +414,10 @@ return [
             'shipping-address' => 'Shipping Address',
             'use_for_shipping' => 'Ship to this address',
             'continue' => 'Continue',
-            'shipping-method' => 'Shipping Method',
-            'payment-information' => 'Payment Information',
+            'shipping-method' => 'Select Shipping Method',
+            'payment-methods' => 'Select Payment Method',
             'payment-method' => 'Payment Method',
-            'summary' => 'Summary of Order',
+            'summary' => 'Order Summary',
             'price' => 'Price',
             'quantity' => 'Quantity',
             'billing-address' => 'Billing Address',
@@ -463,7 +463,7 @@ return [
             'shipping-handling' => 'Shipping & Handling',
             'tax' => 'Tax',
             'grand-total' => 'Grand Total',
-            'final-summary' => 'Thanks for showing your intrest in our store we will send you track number once it shiped',
+            'final-summary' => 'Thanks for showing your interest in our store we will send you tracking number once it shipped',
             'help' => 'If you need any kind of help please contact us at :support_email',
             'thanks' => 'Thanks!'
         ],
@@ -489,7 +489,7 @@ return [
     ],
 
     'webkul' => [
-        'copy-right' => '© Copyright 2018 Webkul Software, All rights reserved'
+        'copy-right' => '© Copyright :year Webkul Software, All rights reserved',
     ],
 
     'response' => [

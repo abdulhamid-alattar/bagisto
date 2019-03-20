@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Webkul\Core\Repositories\ChannelRepository as Channel;
 
-
 /**
  * Channel controller
  *
@@ -26,14 +25,14 @@ class ChannelController extends Controller
     /**
      * ChannelRepository object
      *
-     * @var array
+     * @var Object
      */
     protected $channel;
 
     /**
      * Create a new controller instance.
      *
-     * @param  Webkul\Core\Repositories\ChannelRepository  $channel
+     * @param  Webkul\Core\Repositories\ChannelRepository $channel
      * @return void
      */
     public function __construct(Channel $channel)
@@ -147,12 +146,18 @@ class ChannelController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->channel->count() == 1) {
-            session()->flash('error', trans('admin::app.response.last-delete-error', ['name' => 'Channel']));
+        $channel = $this->channel->find($id);
+
+        if ($channel->code == config('app.channel')) {
+            session()->flash('error', trans('admin::app.response.cannot-delete-default', ['name' => 'Channel']));
         } else {
             Event::fire('core.channel.delete.before', $id);
 
-            $this->channel->delete($id);
+            try {
+                $this->channel->delete($id);
+            } catch(\Exception $e) {
+                session()->flash('warning', trans($e->getMessage()));
+            }
 
             Event::fire('core.channel.delete.after', $id);
 

@@ -21,6 +21,7 @@
         if ($data) {
             foreach ($data as $line) {
                 $rowValues = explode('=', $line);
+
                 if (count($rowValues) === 2) {
                     if (in_array($rowValues[0], $databaseArray)) {
                         $key[] = $rowValues[0];
@@ -29,6 +30,8 @@
                 }
             }
         }
+
+        $databaseData['DB_HOST'] = $databaseData['DB_USERNAME'] = $databaseData['DB_PASSWORD'] =  $databaseData['DB_DATABASE'] = $databaseData['DB_CONNECTION'] = $databaseData['DB_PORT'] = '';
 
         $databaseData = array_combine($key, $value);
 
@@ -73,6 +76,3 @@
         return null;
     }
 ?>
-
-
-

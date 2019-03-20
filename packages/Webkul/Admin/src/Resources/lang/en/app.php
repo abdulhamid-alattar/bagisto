@@ -375,7 +375,14 @@ return [
             'categories' => 'Categories',
             'images' => 'Images',
             'inventories' => 'Inventories',
-            'variations' => 'Variations'
+            'variations' => 'Variations',
+            'product-link' => 'Linked Products',
+            'cross-selling' => 'Cross Selling',
+            'up-selling' => 'Up Selling',
+            'related-products' => 'Related Products',
+            'product-search-hint' => 'Start typing product name',
+            'no-result-found' => 'Products not found with same name.',
+            'searching' => 'Searching ...'
         ],
 
         'attributes' => [
@@ -454,6 +461,10 @@ return [
             'yes' => 'Yes',
             'no' => 'No',
             'position' => 'Position',
+            'display-mode' => 'Display Mode',
+            'products-and-description' => 'Products and Description',
+            'products-only' => 'Products Only',
+            'description-only' => 'Description Only',
             'description-and-images' => 'Description and Images',
             'description' => 'Description',
             'parent-category' => 'Parent Category',
@@ -537,8 +548,8 @@ return [
         ],
         'countries' => [
             'title' => 'Countries',
-            'add-title' => 'Add Counrty',
-            'save-btn-title' => 'Save Counrty',
+            'add-title' => 'Add Country',
+            'save-btn-title' => 'Save Country',
             'general' => 'General',
             'code' => 'Code',
             'name' => 'Name'
@@ -735,7 +746,7 @@ return [
             'update-success' => 'Subscriber was successfully updated',
             'update-failed' => 'Error! You cannot unsubscribe the subscriber',
             'delete' => 'Subscriber was successfully deleted',
-            'delete-failed' => 'Erorr! Subscriber cannot be deleted'
+            'delete-failed' => 'Error! Subscriber cannot be deleted'
         ]
     ],
 
@@ -781,10 +792,13 @@ return [
         'duplicate-error' => 'Identifier must be unique, duplicate identifier :identifier at row :position.',
         'enough-row-error' => 'file has not enough rows',
         'allowed-type' => 'Allowed Type :',
-        'file-type' => 'csv, xls, xlsx.'
+        'file-type' => 'csv, xls, xlsx.',
+        'no-records' => 'Nothing to export',
+        'illegal-format' => 'Error! This type of format is either not supported or its illegal format'
     ],
 
     'response' => [
+        'cannot-delete-default' => 'Cannot delete the default channel',
         'create-success' => ':name created successfully.',
         'update-success' => ':name updated successfully.',
         'delete-success' => ':name deleted successfully.',
@@ -805,4 +819,39 @@ return [
     'footer' => [
         'copy-right' => '© Copyright 2018 Webkul Software, All rights reserved.'
     ],
+
+    'admin' => [
+        'system' => [
+            'catalog' => 'Catalog',
+            'products' => 'Products',
+            'review' => 'Review',
+            'allow-guest-review' => 'Allow Guest Review',
+            'customer' => 'Customer',
+            'settings' => 'Settings',
+            'address' => 'Address',
+            'address' => 'Address',
+            'street-lines' => 'Lines in a Street Address',
+            'sales' => 'Sales',
+            'shipping-methods' => 'Shipping Methods',
+            'free-shipping' => 'Free Shipping',
+            'flate-rate-shipping' => 'Flat Rate Shipping',
+            'shipping' => 'Shipping',
+            'origin' => 'Origin',
+            'country' => 'Country',
+            'state' => 'State',
+            'zip' => 'Zip',
+            'city' => 'City',
+            'street-address' => 'Street Address',
+            'title' => 'Title',
+            'description' => 'Description',
+            'rate' => 'Rate',
+            'status' => 'Status',
+            'type' => 'Type',
+            'payment-methods' => 'Payment Methods',
+            'cash-on-delivery' => 'Cash On Delivery',
+            'money-transfer' => 'Money Transfer',
+            'paypal-standard' => 'Paypal Standard',
+            'business-account' => 'Business Account'
+        ]
+    ]
 ];

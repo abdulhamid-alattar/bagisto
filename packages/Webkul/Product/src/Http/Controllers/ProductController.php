@@ -173,7 +173,9 @@ class ProductController extends Controller
 
         $inventorySources = $this->inventorySource->all();
 
-        return view($this->_config['view'], compact('product', 'categories', 'inventorySources'));
+        $allProducts = $this->productGrid->all();
+
+        return view($this->_config['view'], compact('product', 'categories', 'inventorySources', 'allProducts'));
     }
 
     /**
@@ -265,5 +267,29 @@ class ProductController extends Controller
         Event::fire('products.datagrid.sync', true);
 
         return redirect()->route('admin.catalog.products.index');
+    }
+
+    /**
+     * Result of search product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function productLinkSearch()
+    {
+        if (request()->ajax()) {
+            $results = [];
+
+            foreach ($this->product->searchProductByAttribute(request()->input('query')) as $row) {
+                $results[] = [
+                        'id' => $row->product_id,
+                        'sku' => $row->sku,
+                        'name' => $row->name,
+                    ];
+            }
+
+            return response()->json($results);
+        } else {
+            return view($this->_config['view']);
+        }
     }
 }

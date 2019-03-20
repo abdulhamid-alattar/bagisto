@@ -43,6 +43,7 @@ class CategoryDataGrid extends DataGrid
             'type' => 'number',
             'searchable' => false,
             'sortable' => true,
+            'filterable' => true
         ]);
 
         $this->addColumn([
@@ -51,6 +52,7 @@ class CategoryDataGrid extends DataGrid
             'type' => 'string',
             'searchable' => true,
             'sortable' => true,
+            'filterable' => true
         ]);
 
         $this->addColumn([
@@ -59,6 +61,7 @@ class CategoryDataGrid extends DataGrid
             'type' => 'string',
             'searchable' => false,
             'sortable' => true,
+            'filterable' => true
         ]);
 
         $this->addColumn([
@@ -67,6 +70,7 @@ class CategoryDataGrid extends DataGrid
             'type' => 'boolean',
             'sortable' => true,
             'searchable' => true,
+            'filterable' => true,
             'wrapper' => function($value) {
                 if ($value->status == 1)
                     return 'Active';
@@ -80,7 +84,8 @@ class CategoryDataGrid extends DataGrid
             'label' => trans('admin::app.datagrid.no-of-products'),
             'type' => 'number',
             'sortable' => true,
-            'searchable' => true,
+            'searchable' => false,
+            'filterable' => false
         ]);
     }
 

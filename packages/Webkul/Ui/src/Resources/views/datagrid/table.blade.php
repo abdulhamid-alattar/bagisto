@@ -10,7 +10,7 @@
             <div class="grid-container">
                 <div class="filter-row-one" id="datagrid-filters">
                     <div class="search-filter">
-                        <input type="search" id="search-field" class="control" placeholder="{{ __('ui::app.datagrid.search') }}" v-model="searchValue" />
+                        <input type="search" id="search-field" class="control" placeholder="{{ __('ui::app.datagrid.search') }}" v-model="searchValue" v-on:keyup.enter="searchCollection(searchValue)" />
 
                         <div class="icon-wrapper">
                             <span class="icon search-icon search-btn" v-on:click="searchCollection(searchValue)"></span>
@@ -19,7 +19,7 @@
 
                     <div class="dropdown-filters">
                         <div class="dropdown-toggle">
-                            <div class="dropdown-header">
+                            <div class="grid-dropdown-header">
                                 <span class="name">{{ __('ui::app.datagrid.filter') }}</span>
                                 <i class="icon arrow-down-icon active"></i>
                             </div>
@@ -32,9 +32,11 @@
                                         <select class="filter-column-select control" v-model="filterColumn" v-on:click="getColumnOrAlias(filterColumn)">
                                             <option selected disabled>{{ __('ui::app.datagrid.column') }}</option>
                                             @foreach($results['columns'] as $column)
-                                                <option value="{{ $column['index'] }}">
-                                                    {{ $column['label'] }}
-                                                </option>
+                                                @if(isset($column['filterable']) && $column['filterable'])
+                                                    <option value="{{ $column['index'] }}">
+                                                        {{ $column['label'] }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -338,7 +340,7 @@
                             if (this.filterIndex == this.columnOrAlias && (this.numberValue == 0 || this.numberValue < 0)) {
                                     indexConditions = false;
 
-                                    alert('index columns can have values greater than zero only');
+                                    alert('{{__('ui::app.datagrid.zero-index')}}');
                             }
 
                             if(indexConditions)
