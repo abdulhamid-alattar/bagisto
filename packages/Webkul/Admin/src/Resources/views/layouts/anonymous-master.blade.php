@@ -77,7 +77,11 @@
                 <div class="adjacent-center">
 
                     <div class="brand-logo">
-                        <img src="{{ asset('vendor/webkul/ui/assets/images/logo.png') }}" alt="Bagisto"/>
+                        @if (core()->getConfigData('general.design.admin_logo.logo_image'))
+                            <img src="{{ \Illuminate\Support\Facades\Storage::url(core()->getConfigData('general.design.admin_logo.logo_image')) }}" alt="Bagisto" style="height: 40px; width: 110px;"/>
+                        @else
+                            <img src="{{ asset('vendor/webkul/ui/assets/images/logo.png') }}" alt="Bagisto"/>
+                        @endif
                     </div>
 
                     {!! view_render_event('bagisto.admin.layout.content.before') !!}
@@ -88,7 +92,11 @@
 
                     <div class="footer">
                         <p>
-                            {{ trans('admin::app.footer.copy-right') }}
+                            @if (core()->getConfigData('general.content.footer.footer_content'))
+                                {{ core()->getConfigData('general.content.footer.footer_content') }}
+                            @else
+                                {{ trans('admin::app.footer.copy-right') }}
+                            @endif
                         </p>
                     </div>
 

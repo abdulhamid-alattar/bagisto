@@ -70,6 +70,9 @@ return [
         'taxes' => 'Impostos',
         'tax-categories' => 'Categorias de Impostos',
         'tax-rates' => 'Impostos de Impostos',
+        'edit' => 'Edit',
+        'create' => 'Add',
+        'delete' => 'Delete',
     ],
 
     'dashboard' => [
@@ -270,9 +273,11 @@ return [
             'total' => 'Total',
             'subtotal' => 'Subtotal',
             'shipping-handling' => 'Entrega & Manuseio',
+            'discount' => 'Discount',
             'tax' => 'Imposto',
             'tax-percent' => 'Percentual Imposto',
             'tax-amount' => 'Valor de Imposto',
+            'discount-amount' => 'Discount Amount',
             'discount-amount' => 'Valor de Desconto',
             'grand-total' => 'Total',
             'total-paid' => 'Total Pago',
@@ -718,6 +723,8 @@ return [
 
     'error' => [
         'go-to-home' => 'IR PARA PÁGINA INICIAL',
+        'in-maitainace' => 'In Maintenance',
+        'right-back' => 'Be Right Back',
 
         '404' => [
             'page-title' => '404 Página não Encontrada',

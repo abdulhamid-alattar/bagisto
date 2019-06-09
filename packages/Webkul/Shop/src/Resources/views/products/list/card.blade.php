@@ -21,7 +21,7 @@
     <div class="product-information">
 
         <div class="product-name">
-            <a href="{{ url()->to('/').'/products/'.$product->url_key }}" title="{{ $product->name }}">
+            <a href="{{ url()->to('/').'/products/' . $product->url_key }}" title="{{ $product->name }}">
                 <span>
                     {{ $product->name }}
                 </span>
@@ -30,7 +30,7 @@
 
         @include ('shop::products.price', ['product' => $product])
 
-        @include('shop::products.add-buttons')
+        @include('shop::products.add-buttons', ['product' => $product])
     </div>
 
 </div>

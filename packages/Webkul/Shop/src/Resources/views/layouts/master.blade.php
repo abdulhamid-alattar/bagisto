@@ -67,12 +67,16 @@
 
         <div class="footer-bottom">
             <p>
-                {{ __('shop::app.webkul.copy-right', ['year' => date('Y')]) }}
+                @if (core()->getConfigData('general.content.footer.footer_content'))
+                    {{ core()->getConfigData('general.content.footer.footer_content') }}
+                @else
+                    {{ trans('admin::app.footer.copy-right') }}
+                @endif
             </p>
         </div>
 
     </div>
-    
+
     <script type="text/javascript">
         window.flashMessages = [];
 

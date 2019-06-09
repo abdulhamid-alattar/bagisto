@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'security-warning' => 'Suspicious Activity Found!!!',
+    'nothing-to-delete' => 'Nothing to delete',
+
     'layouts' => [
         'my-account' => 'My Account',
         'profile' => 'Profile',
@@ -104,8 +107,9 @@ return [
             'conditions' => 'Conditions',
             'using' => 'by using this website',
             'agreement' => 'Agreement',
-            'success' => 'Account Created Successfully, An Email Has Been Sent To Your For Account Verification',
-            'success-verify-email-not-sent' => 'Account Created Successfully, But Verification Email Is Not Sent',
+            'success' => 'Account Created Successfully',
+            'success-verify' => 'Account Created Successfully, an e-mail has been sent for verification.',
+            'success-verify-email-unsent' => 'Account created successfully, but verification e-mail unsent',
             'failed' => 'Error! Cannot Create Your Account, Try Again Later',
             'already-verified' => 'Your Account is already verified Or Please Try Sending A New Verification Email Again',
             'verification-not-sent' => 'Error! Problem In Sending Verification Email, Try Again Later',
@@ -216,8 +220,9 @@ return [
                 'edit' => [
                     'page-title' => 'Customer - Edit Address',
                     'title' => 'Edit Address',
+                    'street-address' => 'Street Address',
                     'submit' => 'Save Address',
-                    'success' => 'Address Updated Successfully.'
+                    'success' => 'Address Updated Successfully.',
                 ],
                 'delete' => [
                     'success' => 'Address Successfully Deleted',
@@ -255,6 +260,7 @@ return [
                     'subtotal' => 'Subtotal',
                     'shipping-handling' => 'Shipping & Handling',
                     'tax' => 'Tax',
+                    'discount' => 'Discount',
                     'tax-percent' => 'Tax Percent',
                     'tax-amount' => 'Tax Amount',
                     'discount-amount' => 'Discount Amount',
@@ -325,7 +331,8 @@ return [
         'in-stock' => 'In Stock',
         'out-of-stock' => 'Out Of Stock',
         'view-all' => 'View All',
-        'select-above-options' => 'Please select above options first.'
+        'select-above-options' => 'Please select above options first.',
+        'less-quantity' => 'Quantity can not be less than one.'
     ],
 
     'wishlist' => [
@@ -389,7 +396,8 @@ return [
             ],
             'quantity-error' => 'Requested Quantity Is Not Available',
             'cart-subtotal' => 'Cart Subtotal',
-            'cart-remove-action' => 'Do you really want to do this ?'
+            'cart-remove-action' => 'Do you really want to do this ?',
+            'partial-cart-update' => 'Only some of the product(s) were updated'
         ],
 
         'onepage' => [
@@ -425,7 +433,8 @@ return [
             'contact' => 'Contact',
             'place-order' => 'Place Order',
             'new-address' => 'Add New Address',
-            'save_as_address' => 'Save as Address'
+            'save_as_address' => 'Save as Address',
+            'back' => 'Back'
         ],
 
         'total' => [
@@ -434,6 +443,7 @@ return [
             'grand-total' => 'Grand Total',
             'delivery-charges' => 'Delivery Charges',
             'tax' => 'Tax',
+            'discount' => 'Discount',
             'price' => 'price'
         ],
 
@@ -450,18 +460,21 @@ return [
             'subject' => 'New Order Confirmation',
             'heading' => 'Order Confirmation!',
             'dear' => 'Dear :customer_name',
+            'dear-admin' => 'Dear :admin_name',
             'greeting' => 'Thanks for your Order :order_id placed on :created_at',
+            'greeting-admin' => 'Order Id :order_id placed on :created_at',
             'summary' => 'Summary of Order',
             'shipping-address' => 'Shipping Address',
             'billing-address' => 'Billing Address',
             'contact' => 'Contact',
-            'shipping' => 'Shipping',
-            'payment' => 'Payment',
+            'shipping' => 'Shipping Method',
+            'payment' => 'Payment Method',
             'price' => 'Price',
             'quantity' => 'Quantity',
             'subtotal' => 'Subtotal',
             'shipping-handling' => 'Shipping & Handling',
             'tax' => 'Tax',
+            'discount' => 'Discount',
             'grand-total' => 'Grand Total',
             'final-summary' => 'Thanks for showing your interest in our store we will send you tracking number once it shipped',
             'help' => 'If you need any kind of help please contact us at :support_email',
@@ -473,11 +486,14 @@ return [
             'summary' => 'Summary of Invoice',
         ],
         'shipment' => [
-            'heading' => 'Your Shipment #:shipment_id for Order #:order_id',
+            'heading' => 'Shipment #:shipment_id  has been generated for Order #:order_id',
+            'inventory-heading' => 'New Shipment #:shipment_id had been generated for Order #:order_id',
             'subject' => 'Shipment for your order #:order_id',
+            'inventory-subject' => 'New Shipment had been generated for Order #:order_id',
             'summary' => 'Summary of Shipment',
             'carrier' => 'Carrier',
-            'tracking-number' => 'Tracking Number'
+            'tracking-number' => 'Tracking Number',
+            'greeting' => 'An Order :order_id has been placed on :created_at',
         ],
         'forget-password' => [
             'dear' => 'Dear :name',

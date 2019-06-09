@@ -5,6 +5,7 @@ namespace Webkul\Product\Helpers;
 use Webkul\Attribute\Repositories\AttributeRepository as Attribute;
 use Webkul\Product\Models\ProductAttributeValue;
 use Webkul\Product\Models\Product;
+use Webkul\Product\Models\ProductFlat;
 
 class Price extends AbstractProduct
 {
@@ -34,14 +35,19 @@ class Price extends AbstractProduct
      */
     public function getMinimalPrice($product)
     {
+        static $price = [];
+
+        if(array_key_exists($product->id, $price))
+            return $price[$product->id];
+
         if ($product->type == 'configurable') {
-            return $this->getVariantMinPrice($product);
+            return $price[$product->id] = $this->getVariantMinPrice($product);
         } else {
             if ($this->haveSpecialPrice($product)) {
-                return $product->special_price;
-            } else {
-                return $product->price;
+                return $price[$product->id] = $product->special_price;
             }
+
+            return $price[$product->id] = $product->price;
         }
     }
 
@@ -53,20 +59,33 @@ class Price extends AbstractProduct
      */
     public function getVariantMinPrice($product)
     {
-        static $attribute;
+        static $price = [];
 
-        if (! $attribute)
-            $attribute = $this->attribute->findOneByField('code', 'price');
+        if (array_key_exists($product->id, $price))
+            return $price[$product->id];
 
-        $qb = ProductAttributeValue::join('products', 'product_attribute_values.product_id', '=', 'products.id')
-            ->join('attributes', 'product_attribute_values.attribute_id', '=', 'attributes.id')
-            ->where('products.parent_id', $product->id)
-            ->where('attributes.code', 'price')
-            ->addSelect('product_attribute_values.*');
+        if ($product instanceof ProductFlat) {
+            $productId = $product->product_id;
+        } else {
+            $productId = $product->id;
+        }
 
-        $this->applyChannelLocaleFilter($attribute, $qb);
+        $variantSpecialPrice = $variantRegularPrice = [];
 
-        return $qb->min('product_attribute_values.' . ProductAttributeValue::$attributeTypeFields['price']);
+        foreach ($product->variants as $productVariant) {
+            if ($this->haveSpecialPrice($productVariant)) {
+                $variantSpecialPrice[] = $this->getSpecialPrice($productVariant);
+            }
+            $variantRegularPrice[] = $productVariant->price;
+        }
+
+        if (count($variantSpecialPrice) > 1)
+            if (min($variantSpecialPrice) < min($variantRegularPrice))
+                return $price[$product->id] = min($variantSpecialPrice);
+
+            return $price[$product->id] = min($variantRegularPrice);
+
+        return $price[$product->id] = min($variantRegularPrice);
     }
 
     /**
@@ -77,10 +96,15 @@ class Price extends AbstractProduct
      */
     public function getSpecialPrice($product)
     {
+        static $price = [];
+
+        if(array_key_exists($product->id, $price))
+            return $price[$product->id];
+
         if ($this->haveSpecialPrice($product)) {
-            return $product->special_price;
+            return $price[$product->id] = $product->special_price;
         } else {
-            return $product->price;
+            return $price[$product->id] = $product->price;
         }
     }
 
@@ -90,7 +114,7 @@ class Price extends AbstractProduct
      */
     public function haveSpecialPrice($product)
     {
-        if (is_null($product->special_price) || !$product->special_price)
+        if (is_null($product->special_price) || ! (float) $product->special_price)
             return false;
 
         if (core()->isChannelDateInInterval($product->special_price_from, $product->special_price_to)) {

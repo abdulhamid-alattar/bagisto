@@ -11,7 +11,7 @@ use Webkul\Core\Repositories\CurrencyRepository as Currency;
 /**
  * ExchangeRate controller
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
+ * @author Jitendra Singh <jitendra@webkul.com>
  * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
  */
 class ExchangeRateController extends Controller
@@ -40,8 +40,8 @@ class ExchangeRateController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  Webkul\Core\Repositories\ExchangeRateRepository  $exchangeRate
-     * @param  Webkul\Core\Repositories\CurrencyRepository      $currency
+     * @param  \Webkul\Core\Repositories\ExchangeRateRepository  $exchangeRate
+     * @param  \Webkul\Core\Repositories\CurrencyRepository      $currency
      * @return void
      */
     public function __construct(ExchangeRate $exchangeRate, Currency $currency)
@@ -94,7 +94,7 @@ class ExchangeRateController extends Controller
 
         Event::fire('core.exchange_rate.create.after', $exchangeRate);
 
-        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Exchange rate']));
+        session()->flash('success', trans('admin::app.settings.exchange_rates.create-success'));
 
         return redirect()->route($this->_config['redirect']);
     }
@@ -109,7 +109,7 @@ class ExchangeRateController extends Controller
     {
         $currencies = $this->currency->all();
 
-        $exchangeRate = $this->exchangeRate->find($id);
+        $exchangeRate = $this->exchangeRate->findOrFail($id);
 
         return view($this->_config['view'], compact('currencies', 'exchangeRate'));
     }
@@ -134,7 +134,7 @@ class ExchangeRateController extends Controller
 
         Event::fire('core.exchange_rate.update.after', $exchangeRate);
 
-        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Exchange rate']));
+        session()->flash('success', trans('admin::app.settings.exchange_rates.update-success'));
 
         return redirect()->route($this->_config['redirect']);
     }
@@ -147,18 +147,26 @@ class ExchangeRateController extends Controller
      */
     public function destroy($id)
     {
-        if($this->exchangeRate->count() == 1) {
-            session()->flash('error', trans('admin::app.response.last-delete-error', ['name' => 'Exchange rate']));
+        $exchangeRate = $this->exchangeRate->findOrFail($id);
+
+        if ($this->exchangeRate->count() == 1) {
+            session()->flash('error', trans('admin::app.settings.exchange_rates.last-delete-error'));
         } else {
-            Event::fire('core.exchange_rate.delete.before', $id);
+            try {
+                Event::fire('core.exchange_rate.delete.before', $id);
 
-            $this->exchangeRate->delete($id);
+                $this->exchangeRate->delete($id);
 
-            Event::fire('core.exchange_rate.delete.after', $id);
+                session()->flash('success', trans('admin::app.settings.exchange_rates.delete-success'));
 
-            session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Exchange rate']));
+                Event::fire('core.exchange_rate.delete.after', $id);
+
+                return response()->json(['message' => true], 200);
+            } catch (\Exception $e) {
+                session()->flash('error', trans('admin::app.response.delete-error', ['name' => 'Exchange rate']));
+            }
         }
 
-        return redirect()->back();
+        return response()->json(['message' => false], 400);
     }
 }

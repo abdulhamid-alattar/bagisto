@@ -70,6 +70,9 @@ return [
         'taxes' => 'Taxes',
         'tax-categories' => 'Tax Categories',
         'tax-rates' => 'Tax Rates',
+        'edit' => 'Edit',
+        'create' => 'Add',
+        'delete' => 'Delete',
     ],
 
     'dashboard' => [
@@ -276,9 +279,11 @@ return [
             'total' => 'Total',
             'subtotal' => 'Subtotal',
             'shipping-handling' => 'Shipping & Handling',
+            'discount' => 'Discount',
             'tax' => 'Tax',
             'tax-percent' => 'Tax Percent',
             'tax-amount' => 'Tax Amount',
+            'discount-amount' => 'Discount Amount',
             'discount-amount' => 'Discount Amount',
             'grand-total' => 'Grand Total',
             'total-paid' => 'Total Paid',
@@ -430,7 +435,9 @@ return [
             'color-swatch' => 'Color Swatch',
             'image-swatch' => 'Image Swatch',
             'text-swatch' => 'Text Swatch',
-            'swatch' => 'Swatch'
+            'swatch' => 'Swatch',
+            'image' => 'Image',
+            'file' => 'File'
         ],
         'families' => [
             'title' => 'Families',
@@ -544,7 +551,11 @@ return [
             'save-btn-title' => 'Save Locale',
             'general' => 'General',
             'code' => 'Code',
-            'name' => 'Name'
+            'name' => 'Name',
+            'create-success' => 'Locale created successfully.',
+            'update-success' => 'Locale updated successfully.',
+            'delete-success' => 'Locale deleted successfully.',
+            'last-delete-error' => 'At least one Locale is required.',
         ],
         'countries' => [
             'title' => 'Countries',
@@ -562,7 +573,11 @@ return [
             'general' => 'General',
             'code' => 'Code',
             'name' => 'Name',
-            'symbol' => 'Symbol'
+            'symbol' => 'Symbol',
+            'create-success' => 'Currency created successfully.',
+            'update-success' => 'Currency updated successfully.',
+            'delete-success' => 'Currency deleted successfully.',
+            'last-delete-error' => 'At least one Currency is required.',
         ],
         'exchange_rates' => [
             'title' => 'Exchange Rates',
@@ -572,7 +587,11 @@ return [
             'general' => 'General',
             'source_currency' => 'Source Currency',
             'target_currency' => 'Target Currency',
-            'rate' => 'Rate'
+            'rate' => 'Rate',
+            'create-success' => 'Exchange Rate created successfully.',
+            'update-success' => 'Exchange Rate updated successfully.',
+            'delete-success' => 'Exchange Rate deleted successfully.',
+            'last-delete-error' => 'At least one Exchange Rate is required.',
         ],
         'inventory_sources' => [
             'title' => 'Inventory Sources',
@@ -598,7 +617,11 @@ return [
             'priority' => 'Priority',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
-            'status' => 'Status'
+            'status' => 'Status',
+            'create-success' => 'Inventory source created successfully.',
+            'update-success' => 'Inventory source updated successfully.',
+            'delete-success' => 'Inventory source deleted successfully.',
+            'last-delete-error' => 'At least one Inventory source is required.',
         ],
         'channels' => [
             'title' => 'Channels',
@@ -622,11 +645,15 @@ return [
             'home_page_content' => 'Home Page Content',
             'footer_content' => 'Footer Content',
             'logo' => 'Logo',
-            'favicon' => 'Favicon'
+            'favicon' => 'Favicon',
+            'create-success' => 'Channel created successfully.',
+            'update-success' => 'Channel updated successfully.',
+            'delete-success' => 'Channel deleted successfully.',
+            'last-delete-error' => 'At least one Channel is required.',
         ],
 
         'sliders' => [
-            'title' => 'Sliders',
+            'title' => 'Title',
             'add-title' => 'Create Slider',
             'edit-title' => 'Edit Slider',
             'save-btn-title' => 'Save Slider',
@@ -752,6 +779,8 @@ return [
 
     'error' => [
         'go-to-home' => 'GO TO HOME',
+        'in-maitainace' => 'In Maintenance',
+        'right-back' => 'Be Right Back',
 
         '404' => [
             'page-title' => '404 Page not found',
@@ -798,10 +827,12 @@ return [
     ],
 
     'response' => [
+        'being-used' => 'This resource :name is getting used in :source',
         'cannot-delete-default' => 'Cannot delete the default channel',
         'create-success' => ':name created successfully.',
         'update-success' => ':name updated successfully.',
         'delete-success' => ':name deleted successfully.',
+        'delete-failed' => 'Error encountered while deleting :name.',
         'last-delete-error' => 'At least one :name is required.',
         'user-define-error' => 'Can not delete system :name',
         'attribute-error' => ':name is used in configurable products.',
@@ -826,6 +857,9 @@ return [
             'products' => 'Products',
             'review' => 'Review',
             'allow-guest-review' => 'Allow Guest Review',
+            'inventory' => 'Inventory',
+            'stock-options' => 'Stock Options',
+            'allow-backorders' => 'Allow Backorders',
             'customer' => 'Customer',
             'settings' => 'Settings',
             'address' => 'Address',
@@ -851,7 +885,21 @@ return [
             'cash-on-delivery' => 'Cash On Delivery',
             'money-transfer' => 'Money Transfer',
             'paypal-standard' => 'Paypal Standard',
-            'business-account' => 'Business Account'
+            'business-account' => 'Business Account',
+            'newsletter' => 'NewsLetter Subscription',
+            'newsletter-subscription' => 'Allow NewsLetter Subscription',
+            'email' => 'Email Verification',
+            'email-verification' => 'Allow Email Verification',
+            'sort_order' => 'Sort Order',
+            'general' => 'General',
+            'footer' => 'Footer',
+            'content' => 'Content',
+            'footer-content' => 'Footer Text',
+            'locale-options' => 'Locale Options',
+            'weight-unit' => 'Weight Unit',
+            'design' => 'Design',
+            'admin-logo' => 'Admin Logo',
+            'logo-image' => 'Logo Image'
         ]
     ]
 ];

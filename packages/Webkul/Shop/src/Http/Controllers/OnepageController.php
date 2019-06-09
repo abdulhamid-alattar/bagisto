@@ -37,7 +37,7 @@ class OnepageController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  Webkul\Attribute\Repositories\OrderRepository  $orderRepository
+     * @param  \Webkul\Attribute\Repositories\OrderRepository  $orderRepository
      * @return void
      */
     public function __construct(OrderRepository $orderRepository)
@@ -61,6 +61,20 @@ class OnepageController extends Controller
     }
 
     /**
+     * Return order short summary
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function summary()
+    {
+        $cart = Cart::getCart();
+
+        return response()->json([
+                'html' => view('shop::checkout.total.summary', compact('cart'))->render()
+            ]);
+    }
+
+    /**
      * Saves customer address.
      *
      * @param  \Webkul\Checkout\Http\Requests\CustomerAddressForm $request
@@ -69,8 +83,6 @@ class OnepageController extends Controller
     public function saveAddress(CustomerAddressForm $request)
     {
         $data = request()->all();
-
-        // dd($data);
 
         $data['billing']['address1'] = implode(PHP_EOL, array_filter($data['billing']['address1']));
         $data['shipping']['address1'] = implode(PHP_EOL, array_filter($data['shipping']['address1']));
