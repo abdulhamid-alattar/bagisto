@@ -3,9 +3,9 @@
 namespace Webkul\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Webkul\Product\Providers\EventServiceProvider;
-use Illuminate\Routing\Router;
-use Webkul\Product\Models\Product;
+use Webkul\Product\Models\ProductProxy;
+use Webkul\Product\Observers\ProductObserver;
+use Webkul\Product\Console\Commands\PriceUpdate;
 
 class ProductServiceProvider extends ServiceProvider
 {
@@ -14,17 +14,17 @@ class ProductServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
         $this->app->register(EventServiceProvider::class);
 
-        $this->composeView();
-
         $this->publishes([
             dirname(__DIR__) . '/Config/imagecache.php' => config_path('imagecache.php'),
         ]);
+
+        ProductProxy::observe(ProductObserver::class);
     }
 
     /**
@@ -35,6 +35,8 @@ class ProductServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerConfig();
+
+        $this->registerCommands();
     }
 
     public function registerConfig() {
@@ -43,19 +45,12 @@ class ProductServiceProvider extends ServiceProvider
         );
     }
 
-    public function composeView() {
-        view()->composer(['admin::catalog.products.create'], function ($view) {
-            $items = array();
-
-            foreach (config('product_types') as $item) {
-                $item['children'] = [];
-
-                array_push($items, $item);
-            }
-
-            $types = core()->sortItems($items);
-
-            $view->with('productTypes', $types);
-        });
+    /**
+     * Register the console commands of this package
+     */
+    protected function registerCommands()
+    {
+        if ($this->app->runningInConsole())
+            $this->commands([PriceUpdate::class,]);
     }
 }

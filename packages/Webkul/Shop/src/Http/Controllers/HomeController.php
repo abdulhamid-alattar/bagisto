@@ -3,8 +3,6 @@
 namespace Webkul\Shop\Http\Controllers;
 
 use Webkul\Shop\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Webkul\Core\Repositories\SliderRepository;
 
 /**
@@ -17,10 +15,19 @@ use Webkul\Core\Repositories\SliderRepository;
 {
     protected $_config;
 
+    /**
+     * SliderRepository object
+     *
+     * @var Object
+    */
     protected $sliderRepository;
 
-    protected $current_channel;
-
+    /**
+     * Create a new controller instance.
+     *
+     * @param  \Webkul\Core\Repositories\SliderRepository $sliderRepository
+     * @return void
+    */
     public function __construct(SliderRepository $sliderRepository)
     {
         $this->_config = request('_config');
@@ -30,11 +37,13 @@ use Webkul\Core\Repositories\SliderRepository;
 
     /**
      * loads the home page for the storefront
+     * 
+     * @return \Illuminate\View\View 
      */
     public function index()
     {
         $currentChannel = core()->getCurrentChannel();
-
+        
         $sliderData = $this->sliderRepository->findByField('channel_id', $currentChannel->id)->toArray();
 
         return view($this->_config['view'], compact('sliderData'));

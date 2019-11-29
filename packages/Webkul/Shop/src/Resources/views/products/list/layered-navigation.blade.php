@@ -1,5 +1,37 @@
 @inject ('attributeRepository', 'Webkul\Attribute\Repositories\AttributeRepository')
 
+@inject ('productFlatRepository', 'Webkul\Product\Repositories\ProductFlatRepository')
+
+@inject ('productRepository', 'Webkul\Product\Repositories\ProductRepository')
+
+<?php
+    $filterAttributes = [];
+
+    if (isset($category)) {
+        $products = $productRepository->getAll($category->id);
+
+        if (count($category->filterableAttributes) > 0 && count($products)) {
+            $filterAttributes = $category->filterableAttributes;
+        } else {
+            $categoryProductAttributes = $productFlatRepository->getCategoryProductAttribute($category->id);
+
+            if ($categoryProductAttributes) {
+                foreach ($attributeRepository->getFilterAttributes() as $filterAttribute) {
+                    if (in_array($filterAttribute->id, $categoryProductAttributes)) {
+                        $filterAttributes[] = $filterAttribute;
+                    } else  if ($filterAttribute ['code'] == 'price') {
+                        $filterAttributes[] = $filterAttribute;
+                    }
+                }
+
+                $filterAttributes = collect($filterAttributes);
+            }
+        }
+    } else {
+        $filterAttributes = $attributeRepository->getFilterAttributes();
+    }
+?>
+
 <div class="layered-filter-wrapper">
 
     {!! view_render_event('bagisto.shop.products.list.layered-nagigation.before') !!}
@@ -83,19 +115,14 @@
 
             data: function() {
                 return {
-                    attributes: @json($attributeRepository->getFilterAttributes()),
+                    attributes: @json($filterAttributes),
+                    
                     appliedFilters: {}
                 }
             },
 
             created: function () {
                 var urlParams = new URLSearchParams(window.location.search);
-
-                //var entries = urlParams.entries();
-
-                //for (let pair of entries) {
-                    //this.appliedFilters[pair[0]] = pair[1].split(',');
-                //}
 
                 var this_this = this;
 
@@ -119,7 +146,9 @@
                     var params = [];
 
                     for(key in this.appliedFilters) {
-                        params.push(key + '=' + this.appliedFilters[key].join(','))
+                        if (key != 'page') {
+                            params.push(key + '=' + this.appliedFilters[key].join(','))
+                        }
                     }
 
                     window.location.href = "?" + params.join('&');
@@ -144,7 +173,7 @@
                             0,
                             0
                         ],
-                        max: 500,
+                        max: {{ core()->convertPrice($productFlatRepository->getCategoryProductMaximumPrice($category)) }},
                         processStyle: {
                             "backgroundColor": "#FF6472"
                         },
@@ -158,7 +187,7 @@
 
             created: function () {
                 if (!this.index)
-                    this.active = true;
+                    this.active = false;
 
                 if (this.appliedFilterValues && this.appliedFilterValues.length) {
                     this.appliedFilters = this.appliedFilterValues;

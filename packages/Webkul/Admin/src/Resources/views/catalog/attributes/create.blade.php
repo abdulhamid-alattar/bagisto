@@ -36,7 +36,7 @@
                             {!! view_render_event('bagisto.admin.catalog.attribute.create_form_accordian.general.controls.before') !!}
 
                             <div class="control-group" :class="[errors.has('code') ? 'has-error' : '']">
-                                <label for="code">{{ __('admin::app.catalog.attributes.code') }}</label>
+                                <label for="code" class="required">{{ __('admin::app.catalog.attributes.code') }}</label>
                                 <input type="text" v-validate="'required'" class="control" id="code" name="code" value="{{ old('code') }}"  data-vv-as="&quot;{{ __('admin::app.catalog.attributes.code') }}&quot;" v-code/>
                                 <span class="control-error" v-if="errors.has('code')">@{{ errors.first('code') }}</span>
                             </div>
@@ -54,6 +54,7 @@
                                     <option value="date">{{ __('admin::app.catalog.attributes.date') }}</option>
                                     <option value="image">{{ __('admin::app.catalog.attributes.image') }}</option>
                                     <option value="file">{{ __('admin::app.catalog.attributes.file') }}</option>
+                                    <option value="checkbox">{{ __('admin::app.catalog.attributes.checkbox') }}</option>
                                 </select>
                             </div>
 
@@ -78,7 +79,7 @@
                                 <span class="control-error" v-if="errors.has('admin_name')">@{{ errors.first('admin_name') }}</span>
                             </div>
 
-                            @foreach (Webkul\Core\Models\Locale::all() as $locale)
+                            @foreach (app('Webkul\Core\Repositories\LocaleRepository')->all() as $locale)
 
                                 <div class="control-group">
                                     <label for="locale-{{ $locale->code }}">{{ $locale->name . ' (' . $locale->code . ')' }}</label>
@@ -204,6 +205,14 @@
                                 </select>
                             </div>
 
+                            <div class="control-group">
+                                <label for="use_in_flat">{{ __('admin::app.catalog.attributes.use_in_flat') }}</label>
+                                <select class="control" id="use_in_flat" name="use_in_flat">
+                                    <option value="0">{{ __('admin::app.catalog.attributes.no') }}</option>
+                                    <option value="1">{{ __('admin::app.catalog.attributes.yes') }}</option>
+                                </select>
+                            </div>
+
                             {!! view_render_event('bagisto.admin.catalog.attribute.create_form_accordian.configuration.controls.after') !!}
 
                         </div>
@@ -251,7 +260,7 @@
 
                             <th>{{ __('admin::app.catalog.attributes.admin_name') }}</th>
 
-                            @foreach (Webkul\Core\Models\Locale::all() as $locale)
+                            @foreach (app('Webkul\Core\Repositories\LocaleRepository')->all() as $locale)
 
                                 <th>{{ $locale->name . ' (' . $locale->code . ')' }}</th>
 
@@ -280,7 +289,7 @@
                                 </div>
                             </td>
 
-                            @foreach (Webkul\Core\Models\Locale::all() as $locale)
+                            @foreach (app('Webkul\Core\Repositories\LocaleRepository')->all() as $locale)
                                 <td>
                                     <div class="control-group" :class="[errors.has(localeInputName(row, '{{ $locale->code }}')) ? 'has-error' : '']">
                                         <input type="text" v-validate="'{{ app()->getLocale() }}' == '{{ $locale->code }}' ? 'required': ''"  v-model="row['{{ $locale->code }}']" :name="localeInputName(row, '{{ $locale->code }}')" class="control" data-vv-as="&quot;{{ $locale->name . ' (' . $locale->code . ')' }}&quot;"/>
@@ -356,7 +365,7 @@
                     var rowCount = this.optionRowCount++;
                     var row = {'id': 'option_' + rowCount};
 
-                    @foreach (Webkul\Core\Models\Locale::all() as $locale)
+                    @foreach (app('Webkul\Core\Repositories\LocaleRepository')->all() as $locale)
                         row['{{ $locale->code }}'] = '';
                     @endforeach
 

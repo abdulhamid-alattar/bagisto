@@ -5,6 +5,12 @@ namespace Webkul\Product\Helpers;
 use Webkul\Attribute\Repositories\AttributeOptionRepository as AttributeOption;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Product Image Helper
+ *
+ * @author Jitendra Singh <jitendra@webkul.com>
+ * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ */
 class ProductImage extends AbstractProduct
 {
     /**
@@ -32,7 +38,7 @@ class ProductImage extends AbstractProduct
             ];
         }
 
-        if (! count($images)) {
+        if (! $product->parent_id && ! count($images)) {
             $images[] = [
                 'small_image_url' => asset('vendor/webkul/ui/assets/images/product/small-product-placeholder.png'),
                 'medium_image_url' => asset('vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png'),

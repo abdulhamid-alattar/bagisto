@@ -39,13 +39,14 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         'view' => 'shop::checkout.cart.index'
     ])->name('shop.checkout.cart.index');
 
+        Route::post('checkout/check/coupons', 'Webkul\Shop\Http\Controllers\OnepageController@applyCoupon')->name('shop.checkout.check.coupons');
+
+        Route::post('checkout/remove/coupon', 'Webkul\Shop\Http\Controllers\OnepageController@removeCoupon')->name('shop.checkout.remove.coupon');
+
     //Cart Items Add
     Route::post('checkout/cart/add/{id}', 'Webkul\Shop\Http\Controllers\CartController@add')->defaults('_config', [
         'redirect' => 'shop.checkout.cart.index'
     ])->name('cart.add');
-
-    //Cart Items Add Configurable for more
-    Route::get('checkout/cart/addconfigurable/{slug}', 'Webkul\Shop\Http\Controllers\CartController@addConfigurable')->name('cart.add.configurable');
 
     //Cart Items Remove
     Route::get('checkout/cart/remove/{id}', 'Webkul\Shop\Http\Controllers\CartController@remove')->name('cart.remove');
@@ -86,15 +87,14 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     ])->name('shop.checkout.success');
 
     //Shop buynow button action
-    Route::get('buynow/{id}/{quantity}', 'Webkul\Shop\Http\Controllers\CartController@buyNow')->name('shop.product.buynow');
-
-    //Shop buynow button action
     Route::get('move/wishlist/{id}', 'Webkul\Shop\Http\Controllers\CartController@moveToWishlist')->name('shop.movetowishlist');
 
     //Show Product Details Page(For individually Viewable Product)
     Route::get('/products/{slug}', 'Webkul\Shop\Http\Controllers\ProductController@index')->defaults('_config', [
         'view' => 'shop::products.view'
     ])->name('shop.products.index');
+
+    Route::get('/downloadable/download-sample/{type}/{id}', 'Webkul\Shop\Http\Controllers\ProductController@downloadSample')->name('shop.downloadable.download_sample');
 
     // Show Product Review Form
     Route::get('/reviews/{slug}', 'Webkul\Shop\Http\Controllers\ReviewController@show')->defaults('_config', [
@@ -110,6 +110,11 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
     Route::post('/product/{slug}/review', 'Webkul\Shop\Http\Controllers\ReviewController@store')->defaults('_config', [
         'redirect' => 'shop.home.index'
     ])->name('shop.reviews.store');
+
+     // Download file or image
+    Route::get('/product/{id}/{attribute_id}', 'Webkul\Shop\Http\Controllers\ProductController@download')->defaults('_config', [
+        'view' => 'shop.products.index'
+    ])->name('shop.product.file.download');
 
     //customer routes starts here
     Route::prefix('customer')->group(function () {
@@ -160,6 +165,12 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         //resend verification email
         Route::get('/resend/verification/{email}', 'Webkul\Customer\Http\Controllers\RegistrationController@resendVerificationEmail')->name('customer.resend.verification-email');
 
+        // for customer login checkout
+        Route::post('/customer/exist', 'Webkul\Shop\Http\Controllers\OnepageController@checkExistCustomer')->name('customer.checkout.exist');
+
+        // for customer login checkout
+        Route::post('/customer/checkout/login', 'Webkul\Shop\Http\Controllers\OnepageController@loginForCheckout')->name('customer.checkout.login');
+
         // Auth Routes
         Route::group(['middleware' => ['customer']], function () {
 
@@ -201,6 +212,12 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 Route::post('profile/edit', 'Webkul\Customer\Http\Controllers\CustomerController@update')->defaults('_config', [
                     'redirect' => 'customer.profile.index'
                 ])->name('customer.profile.edit');
+
+                //Customer Profile Delete Form Store
+                Route::post('profile/destroy', 'Webkul\Customer\Http\Controllers\CustomerController@destroy')->defaults('_config', [
+                    'redirect' => 'customer.profile.index'
+                ])->name('customer.profile.destroy');
+
                 /*  Profile Routes Ends Here  */
 
                 /*    Routes for Addresses   */
@@ -248,6 +265,16 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                     'view' => 'shop::customers.account.orders.index'
                 ])->name('customer.orders.index');
 
+                //Customer downloadable products(listing)
+                Route::get('downloadable-products', 'Webkul\Shop\Http\Controllers\DownloadableProductController@index')->defaults('_config', [
+                    'view' => 'shop::customers.account.downloadable_products.index'
+                ])->name('customer.downloadable_products.index');
+
+                //Customer downloadable products(listing)
+                Route::get('downloadable-products/download/{id}', 'Webkul\Shop\Http\Controllers\DownloadableProductController@download')->defaults('_config', [
+                    'view' => 'shop::customers.account.downloadable_products.index'
+                ])->name('customer.downloadable_products.download');
+
                 //Customer orders view summary and status
                 Route::get('orders/view/{id}', 'Webkul\Shop\Http\Controllers\OrderController@view')->defaults('_config', [
                     'view' => 'shop::customers.account.orders.view'
@@ -277,6 +304,8 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
         });
     });
     //customer routes end here
+
+    Route::get('page/{slug}', 'Webkul\CMS\Http\Controllers\Shop\PagePresenterController@presenter')->name('shop.cms.page');
 
     Route::fallback('Webkul\Shop\Http\Controllers\HomeController@notFound');
 });
